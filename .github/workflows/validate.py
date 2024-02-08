@@ -45,6 +45,7 @@ def check_url_status_code(obj):
     try:
         if "rpc_url" in obj:
             response = requests.get(obj["rpc_url"] + "/health", timeout=TIMEOUT_IN_MS)
+            print("rpc_url",response)
             if response.status_code != 200:
                 print(f"Error: The RPC URL {obj['rpc_url']} is not accessible.")
                 sys.exit(1)
@@ -54,6 +55,7 @@ def check_url_status_code(obj):
 
         if "explorer_url" in obj:
             response = requests.get(obj["explorer_url"] + "/blocks/1", timeout=TIMEOUT_IN_MS)
+            print("explorer_url",response)
             if response.status_code != 200:
                 print(f"Error: The Explorer URL {obj['explorer_url']} is not accessible.")
                 sys.exit(1)
@@ -63,6 +65,7 @@ def check_url_status_code(obj):
 
         if "metrics_endpoint" in obj:
             response = requests.get(obj["metrics_endpoint"], timeout=TIMEOUT_IN_MS)
+            print("metrics_endpoint",response)
             if response.status_code != 200:
                 print(f"Error: The Metrics URL {obj['metrics_endpoint']} is not accessible.")
                 sys.exit(1)
@@ -158,5 +161,6 @@ def check_duplicate_urls_in_latest_entry():
 if __name__ == "__main__":
     latest_entry = check_duplicate_urls_in_latest_entry()
     if latest_entry:
+        print(latest_entry)
         check_required_keys(latest_entry)
         check_url_status_code(latest_entry)
